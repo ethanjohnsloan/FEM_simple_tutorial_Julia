@@ -3,6 +3,13 @@ pythonplot()
 
 using LinearSolve
 
+using MPI
+MPI.Init()
+
+comm = MPI.COMM_WORLD
+rank = MPI.Comm_rank(comm)
+nprocs = MPI.Comm_size(comm)
+
 function stiff_mat(nodes, a, kappa)
 	n = length(nodes)-1
 	A = zeros(n+1, n+1)
@@ -58,5 +65,3 @@ u_test = poisson_solver()
 p = plot(x_test, u_test, label="numerical FEM", xlabel="x", ylabel="T", title="temperature profile of a rod with source")
 display(p)
 readline()
-
-
